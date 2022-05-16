@@ -1,0 +1,31 @@
+.navigation {
+  background: $color-primary;
+  height: 60px;
+  @include flex-direction(row, center);
+
+  &__container {
+    width: 100%;
+    max-width: 1024px;
+    color: #fff;
+    @include flex-direction(row, space-between);
+
+
+    &-logo {
+      font-weight: 500;
+      font-size: 18px;
+    }
+
+    &-items {
+      @include flex-direction(row, flex-start);
+      gap: 20px;
+
+      .nav-item {
+        cursor: pointer;
+        color: #fff;
+        border-radius: 4px;
+        padding: 5px 12px;
+        border: 1px solid #fff;
+      }
+    }
+  }
+}
