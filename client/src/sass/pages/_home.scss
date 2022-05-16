@@ -1,0 +1,167 @@
+.home {
+  &__container {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 70px;
+
+    &-covid {
+      border: 1px solid rgba(211, 211, 211, 0.94);
+      @include flex-direction(row, flex-start);
+      gap: 20px;
+      padding: 10px 20px;
+      border-radius: 5px;
+
+      .covid-icon {
+        background: #fff0ef;
+        padding: 10px;
+        @include flex-direction(row, flex-start);
+
+        .info-icon {
+          color: #923e01;
+          font-size: 22px;
+        }
+      }
+
+      p {
+        font-weight: 300;
+        font-size: 16px;
+
+        a {
+          text-decoration: none;
+          color: #0071c2;
+        }
+      }
+    }
+
+    &-explorer {
+      border: 1px solid lightgrey;
+      border-radius: 5px;
+      margin-top: 30px;
+      padding: 10px 20px;
+      @include flex-direction(row, space-between);
+
+      .explore-left {
+        @include flex-direction(row, flex-start);
+        gap: 15px;
+
+        .svg-container {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      .explore-icon {
+        font-size: 22px;
+        color: grey;
+        cursor: pointer;
+      }
+
+
+    }
+
+    &-properties {
+      margin-top: 30px;
+
+      .property-heading {
+        margin-bottom: 20px;
+      }
+    }
+
+    &-featured {
+      margin-top: 40px;
+
+      .featured-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .featured-grid-bottom {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+      }
+    }
+
+    &-subscribe {
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+      margin: 40px 0;
+      padding: 10px;
+      position: relative;
+
+      .subscribe__left {
+        @include flex-direction(row, flex-start);
+        gap: 20px;
+
+        &-content {
+          @include flex-direction(column, flex-start);
+          flex: 1;
+          align-items: flex-start;
+          gap: 7px;
+
+          h2 {
+            color: #464444;
+          }
+
+          p {
+            font-size: 17px;
+            color: rgba(0, 0, 0, 0.88);
+          }
+
+          .email-sub {
+            @include flex-direction(row, flex-start);
+            gap: 5px;
+            width: 70%;
+
+            input {
+              width: 100%;
+              padding: 7px;
+              border: 1px solid lightgrey;
+              outline: 0;
+            }
+
+            button {
+              padding: 7px 15px;
+              border: 1px solid lightgrey;
+              background: transparent;
+              border-radius: 3px;
+              color: #003580;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .sub-icon {
+        position: absolute;
+        top: 0;
+        right: 5px;
+        font-size: 22px;
+        cursor: pointer;
+      }
+    }
+
+    &-guests {
+      .guests-title {
+        margin-bottom: 20px;
+      }
+    }
+
+    &-destinations {
+      .destination-title {
+        margin: 20px 0;
+      }
+    }
+  }
+
+  &__save-time {
+    margin-top: 60px;
+    margin-bottom: 30px;
+    height: 35vh;
+    background: $color-primary;
+    width: 100%;
+  }
+}

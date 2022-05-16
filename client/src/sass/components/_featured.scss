@@ -1,0 +1,40 @@
+.featured__item {
+  position: relative;
+  cursor: pointer;
+
+  &-img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: all ease .9s;
+    filter: brightness(80%);
+
+    &:hover {
+      filter: brightness(100%);
+    }
+  }
+
+  &-overlay {
+    background: linear-gradient(rgba(0, 27, 65, 0.75) 0px, rgba(0, 27, 65, 0) 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 7px;
+    width: 100%;
+
+    .featured-title {
+      color: #fff;
+
+      h1 {
+        font-size: 22px;
+      }
+
+      h2 {
+        font-size: 18px;
+        margin-top: 4px;
+      }
+    }
+  }
+
+}

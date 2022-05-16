@@ -1,0 +1,143 @@
+.destinations {
+
+  &__actions {
+    @include flex-direction(row, flex-start);
+    gap: 20px;
+
+    .region-btn {
+      padding: 11px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      background: none;
+
+      &.active {
+        border: 1px solid rgb(0, 113, 194);
+        color: $color-primary;
+        background: rgba(0, 113, 194, 0.06);
+      }
+    }
+
+    .city-btn {
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      background: none;
+      padding: 11px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+
+      &.active {
+        border: 1px solid rgb(0, 113, 194);
+        color: $color-primary;
+        background: rgba(0, 113, 194, 0.06);
+      }
+
+      &:hover {
+        background: rgba(211, 211, 211, 0.36);
+      }
+    }
+
+    .place-btn {
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      background: none;
+      padding: 11px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+
+      &.active {
+        border: 1px solid rgb(0, 113, 194);
+        color: $color-primary;
+        background: rgba(0, 113, 194, 0.06);
+      }
+
+      &:hover {
+        background: rgba(211, 211, 211, 0.36);
+      }
+    }
+
+  }
+
+  &__regions {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+
+    .regions-items {
+
+      .region-item {
+        margin-bottom: 15px;
+
+        h2 {
+          font-size: 15px;
+          font-weight: normal;
+          font-family: cursive;
+        }
+
+        p {
+          font-size: 15px;
+          color: rgba(128, 128, 128, 0.89);
+          font-family: "Bell MT";
+        }
+      }
+    }
+  }
+
+  &__cities {
+    @include flex-direction(row, space-between);
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 30px;
+
+    .cities-items {
+      flex: 1;
+      gap: 20px;
+
+      .city-item {
+        margin-bottom: 10px;
+
+        h2 {
+          font-size: 16px;
+          font-weight: 400;
+          margin-bottom: 3px;
+          font-family: cursive
+        }
+
+        span {
+          font-size: 15px;
+          color: grey;
+          font-family: "Bell MT";
+        }
+      }
+    }
+  }
+
+  &__interests-places {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+
+    .places-items {
+      .place-item {
+        margin-bottom: 10px;
+
+        h2 {
+          font-size: 15px;
+          font-weight: normal;
+          font-family: cursive;
+        }
+
+        span {
+          font-size: 15px;
+          color: rgba(128, 128, 128, 0.89);
+          font-family: "Bell MT";
+        }
+      }
+    }
+  }
+}
