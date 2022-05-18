@@ -1,7 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
-import {properties} from "./data/properties.js";
 import connectDB from "./db/db.js";
+
+//routes
+import authRoute from "./routes/authRoutes.js";
+import hotelRoute from "./routes/hotelRoutes.js"
+import roomsRoute from "./routes/roomRoutes.js";
+import usersRoute from "./routes/userRoutes.js"
 
 dotenv.config();
 
@@ -9,13 +14,13 @@ connectDB();
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("API is running");
-});
+//middlewares
+app.use(express.json());
 
-app.get("/api/properties", (req, res) => {
-    res.json(properties);
-})
+app.use("/api/auth", authRoute);
+app.use("/api/hotels", hotelRoute);
+app.use("/api/rooms", roomsRoute);
+app.use("/api/users", usersRoute);
 
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
