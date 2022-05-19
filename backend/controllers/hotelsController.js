@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Hotel from "../models/Hotel.js";
+import {errorResponse} from "../helpers/errorResponse.js";
 
 //@desc create a hotel
 //@route /api/hotels POST
@@ -39,13 +40,19 @@ export const deleteHotel = asyncHandler(async (req, res) => {
 //@desc fetch all hotels
 //@route /api/hotels/ GET
 //@access public
-export const getAllHotels = asyncHandler(async (req, res) => {
+export const getAllHotels = asyncHandler(async (req, res, next) => {
     const hotels = await Hotel.find();
 
-    res.status(200).json({success: true, hotels})
-})
+    res.status(200).json({ count: hotels.length, success: true, hotels})
+});
 
 //@desc fetch a hotels
 //@route /api/hotels/:id GET
 //@access public
+export const getOneHotel = asyncHandler(async (req, res, next) => {
+    const hotel = await Hotel.findById(req.params.id);
 
+    if (!hotel) return next(errorResponse(404, "Not found!"));
+
+    res.status(200).json({success: true, data:hotel});
+});

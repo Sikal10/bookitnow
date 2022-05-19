@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/db.js";
+import {errorHandler} from "./middlewares/error.js";
 
 //routes
 import authRoute from "./routes/authRoutes.js";
@@ -21,6 +22,8 @@ app.use("/api/auth", authRoute);
 app.use("/api/hotels", hotelRoute);
 app.use("/api/rooms", roomsRoute);
 app.use("/api/users", usersRoute);
+
+app.use(errorHandler);
 
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
