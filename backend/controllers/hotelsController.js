@@ -46,7 +46,7 @@ export const getAllHotels = asyncHandler(async (req, res, next) => {
     res.status(200).json({ count: hotels.length, success: true, hotels})
 });
 
-//@desc fetch a hotels
+//@desc fetch a hotel
 //@route /api/hotels/:id GET
 //@access public
 export const getOneHotel = asyncHandler(async (req, res, next) => {
