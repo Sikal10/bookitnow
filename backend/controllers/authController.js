@@ -4,9 +4,10 @@ import {errorResponse} from "../helpers/errorResponse.js";
 import {comparePassword, hashPasswordHandler, validateUserData} from "../helpers/validate.js";
 import {signAccessToken} from "../helpers/token.js";
 
-//@desc Register a user
-//@route /api/auth/register POST
-//@access public
+/** @desc Register a user
+    @route /api/auth/register POST
+    @access public
+ */
 export const registerUser = asyncHandler(async (req, res, next) => {
     const {username, email, password} = req.body;
 
@@ -28,17 +29,18 @@ export const registerUser = asyncHandler(async (req, res, next) => {
 
 });
 
-//@desc login a user
-//@route /api/auth/login POST
-//@access public
+/** @desc login a user
+    @route /api/auth/login POST
+    @access public
+ */
 export const loginUser = asyncHandler(async (req, res, next) => {
     const {username, password} = req.body;
 
-    //check if user already exists
+    /**check if user already exists*/
     const user = await User.findOne({username});
     if (!user) return next(errorResponse(404, "user not found"));
 
-    //check if the password is correct
+    /**check if the password is correct*/
     const isPasswordCorrect = await comparePassword(password, user);
     if (!isPasswordCorrect) return next(errorResponse(400, "Invalid credentials"));
 
