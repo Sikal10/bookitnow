@@ -17,23 +17,21 @@ export const protect = asyncHandler(async (req, res, next) => {
 
      /** if the token exists, verify the token */
      try {
-         const decodedToken = verifyAccessToken(accessToken);
+         const decodedToken = await verifyAccessToken(accessToken);
          req.user = await User.findById(decodedToken.id);
          next()
 
      } catch (err) {
          return next(errorResponse(403, "Token is not valid!"))
      }
-
 });
 
-
-
 export const authorize = asyncHandler(async (req, res, next) => {
-    if (req.user && req.user.isAdmin) {
-        console.log("this is an admin");
+    const admin = req.user && req.user.isAdmin;
+
+    if (admin) {
         next();
     } else {
-        console.log("not an admin");
+        return next(errorResponse(401, `${req.user.username} is not an admin.`));
     }
 });
