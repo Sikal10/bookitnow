@@ -40,7 +40,13 @@ export const updateRoom = asyncHandler(async (req, res) => {
     @access private
  */
 export const deleteRoom =  asyncHandler(async (req, res) => {
-    await Room.findOneAndDelete(req.params.id);
+    const {hotelId} = req.params;
+
+    await Room.findByIdAndDelete(req.params.id);
+    await Hotel.findByIdAndUpdate(hotelId, {
+        $pull: {rooms: req.params.id}
+    })
+
 
     res.status(200).json({message: "Room deleted successfully"})
 });
