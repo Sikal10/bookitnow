@@ -89,7 +89,7 @@ const Header = ({type}) => {
                             <input onChange={(e) => setDestination(e.target.value)} type="text" placeholder={"Where are you going?"}/>
                         </div>
 
-                        <div onClick={() => setIsDateOpen(!isDateOpen)} className="searchBarItem">
+                        <div className="searchBarItem">
                             <MdCalendarToday className={"icon"} />
                             <span onClick={() => setIsDateOpen(!isDateOpen)}>{date ? `${format(startDate, "MM/dd/yyyy")} to ${format(endDate, "MM/dd/yyyy")}` : "Check in - Check out"} </span>
                             {isDateOpen &&  <DateRange
