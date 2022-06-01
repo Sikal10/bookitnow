@@ -5,16 +5,47 @@ import {HiOutlineInformationCircle} from "react-icons/hi";
 import {MdOutlineCancel} from "react-icons/md";
 import {useState} from "react";
 import PropertyList from "../components/PropertyList";
-import {featuredData} from "../properties";
 import {GrFormClose} from "react-icons/gr";
 import GuestsHomes from "../components/GuestsHomes";
 import Footer from "../components/Footer";
 import Destinations from "../components/Destinations";
 import SaveTime from "../components/SaveTime";
+import {useQuery} from "react-query";
+import {getHotelsByCity} from "../api/hotels.api";
 
 const Home = () => {
     const [isOpen, setIsOpen] = useState(true);
     const [isDealsOpen, setIsDealsOpen] = useState(true);
+
+    const {data} = useQuery("cityHotels", () => getHotelsByCity("Lisbon,Dubai,Dublin,Madrid,Cairo"));
+
+    const featuredData = [
+        {
+            img: "https://cdn.trendir.com/wp-content/uploads/old/house-design/flooded-house-1.jpg",
+            city: "Istanbul",
+            count: `${data && data?.hotels[0]} properties`
+        },
+        {
+            img: "https://diarnaegypt.com/wp-content/uploads/WPL/2324/thimg_fd5205d0-c6da-409d-bdfa-84de847d5b59_autox420.jpg",
+            city: "Cairo",
+            count: `${data && data?.hotels[1]} properties`
+        },
+        {
+            img: "https://img.gtsstatic.net/reno/imagereader.aspx?imageurl=https%3A%2F%2Fsir.azureedge.net%2F1259i215%2F1h53qcx2c8nfm2yfrzdvgxmg77i215&option=N&h=472&permitphotoenlargement=false",
+            city: "Dubai",
+            count: `${data && data?.hotels[2]} properties`
+        },
+        {
+            img: "https://www.londontopsightstours.com/wp-content/uploads/2018/09/top-london-24.jpg",
+            city: "London",
+            count: `${data && data?.hotels[3]} properties`
+        },
+        {
+            img: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Palacio_de_Comunicaciones_-_47.jpg",
+            city: "Madrid",
+            count: `${data && data?.hotels[4]} properties`
+        }
+    ];
 
     return (
         <div className={"home"}>
@@ -48,6 +79,8 @@ const Home = () => {
                     <h2 className={"property-heading"}>Browse by property type</h2>
                     <PropertyList />
                 </div>
+
+
 
                 <div className={"home__container-featured"}>
                     <div className={"featured-grid"}>
