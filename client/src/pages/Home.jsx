@@ -80,17 +80,15 @@ const Home = () => {
                     <PropertyList />
                 </div>
 
-
-
                 <div className={"home__container-featured"}>
                     <div className={"featured-grid"}>
-                        {featuredData.slice(0, 2).map((item) => <div>
+                        {featuredData.slice(0, 2).map((item, index) => <div key={index}>
                             <Featured item={item} />
                         </div>)}
                     </div>
 
                     <div className={"featured-grid-bottom"}>
-                        {featuredData.slice(2, 5).map((item) => <div>
+                        {featuredData.slice(2, 5).map((item, index) => <div key={index}>
                             <Featured item={item} />
                         </div>)}
                     </div>

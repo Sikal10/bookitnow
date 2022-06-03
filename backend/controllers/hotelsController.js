@@ -94,5 +94,5 @@ export const getOneHotel = asyncHandler(async (req, res, next) => {
 
     if (!hotel) return next(errorResponse(404, "Not found!"));
 
-    res.status(200).json({success: true, data:hotel});
+    res.status(200).json({success: true, hotel});
 });
