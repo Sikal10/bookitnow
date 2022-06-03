@@ -1,17 +1,8 @@
 import axios from "axios";
 
-export const getAllHotels = () => axios.get("/api/hotels").then((res) => {
-    console.log("hotels--->", res);
-    return res.data.hotels;
-});
-
 export const getFeaturedHotels = () => axios.get("/api/hotels?featured=true&limit=4").then((res) => res.data);
 
-export const getOneHotel = (id) => axios.get(`/api/hotels/${id}`).then((res) => {
-    console.log("hotel--->", res);
-    return res;
-    // return res.data.hotel;
-});
+export const getOneHotel = id => axios.get(`/api/hotels/find/${id}`).then((res) => res.data);
 
 export const getHotelsByCity = async (cities) => {
     const {data} = await axios.get(`/api/hotels/countByCity?cities=${cities}`);
@@ -20,5 +11,10 @@ export const getHotelsByCity = async (cities) => {
 
 export const getHotelsByType = async () => {
     const {data} = await axios.get("/api/hotels/countByType");
+    return data;
+};
+
+export const getSearchedHotels = async (destination, minPrice, maxPrice) => {
+    const {data} = await axios.get(`/api/hotels?city=${destination}&minPrice=${minPrice || 0}&maxPrice=${maxPrice || 999}`);
     return data;
 }

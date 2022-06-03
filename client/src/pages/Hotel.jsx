@@ -2,10 +2,13 @@ import React, {useState} from 'react';
 import Navigation from "../components/Navigation";
 import Header from "../components/Header";
 import {MdClose, MdLocationPin} from "react-icons/md";
-import {hotelPhotos} from "../properties";
 import SaveTime from "../components/SaveTime";
 import Footer from "../components/Footer";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
+import {useLocation} from "react-router-dom";
+import {getOneHotel} from "../api/hotels.api";
+import {useQuery} from "react-query";
+
 
 const Hotel = () => {
     const [slideNumber, setSlideNumber] = useState(0);
@@ -16,7 +19,17 @@ const Hotel = () => {
         setOpenImage(true)
     };
 
-    const lastSlide = hotelPhotos.length - 1;
+    /** get the hotel ID from the URL */
+    const location = useLocation();
+    const hotelID = location.pathname.split('/')[2];
+
+
+    const {isLoading, data, isError, error} = useQuery(["hotel", hotelID], () => getOneHotel(hotelID), {
+        enabled: Boolean(hotelID)
+    });
+    const {hotel: {name, distance, description, photos, rating, address, title, cheapestPrice}} = data;
+
+    const lastSlide = photos.length - 1;
 
     const handleImageDirection = (direction) => {
         let newSlideNumber;
@@ -28,7 +41,9 @@ const Hotel = () => {
         }
 
         setSlideNumber(newSlideNumber);
-    }
+    };
+
+    if (isLoading) return <h2>Loading...</h2>
 
     return (
         <div className={"hotel"}>
@@ -41,23 +56,23 @@ const Hotel = () => {
                     <FaArrowLeft onClick={() => handleImageDirection("prev")} className={"slider__left-icon"} />
                     <MdClose onClick={() => setOpenImage(false)} className={"slider__close-icon"} />
                     <div className="slider__wrapper">
-                        <img className={"slider-image"} src={hotelPhotos[slideNumber].image} alt=""/>
+                        <img className={"slider-image"} src={photos[slideNumber].image} alt=""/>
                     </div>
                     <FaArrowRight onClick={() => handleImageDirection("next")} className={"slider__right-icon"}/>
                 </div>}
 
                 <div className="hotel__container-wrapper">
                     <button className={"hotel-reserve"}>Reserve or Book Now!</button>
-                    <h1 className={"hotel-name"}>Tower Street Apartments</h1>
+                    <h1 className={"hotel-name"}>{name}</h1>
                     <div className={"hotel-address"}>
                         <MdLocationPin className={"hotel-icon"} />
-                        <span>Elton St 125 New york</span>
+                        <span>{address}</span>
                     </div>
-                    <span className={"hotel-location"}>Excellent location - 500m from center</span>
-                    <span className={"hotel-price"}>Book a stay over $114 at this property and get a free airport taxi</span>
+                    <span className={"hotel-location"}>Excellent location - {distance}m from center</span>
+                    <span className={"hotel-price"}>Book a stay over ${cheapestPrice} at this property and get a free airport taxi</span>
 
                     <div className="hotel__images">
-                        {hotelPhotos.map(({image}, index) => {
+                        {photos.map(({image}, index) => {
                             return <div className={"hotel__images-wrapper"} key={index}>
                                 <img onClick={() => handleImageClick(index)} src={image} className={"hotel-image"} alt=""/>
                             </div>
@@ -66,26 +81,10 @@ const Hotel = () => {
 
                     <div className="hotel-details">
                         <div className="bottom-left">
-                            <h2>Stay in the heart of Madrid</h2>
+                            <h2>{title}</h2>
 
-                            <p>Abra Cadabra Suites is situated in the Madrid City Centre district in Madrid, 700 m from Plaza Mayor
-                                Madrid and 350 m from Madrid Cathedral and Royal Palace. Free WiFi is available.
-                            </p>
-
-                            <p>Every room at this guest house is air conditioned and is fitted with a flat-screen TV. A balcony or patio are featured in certain rooms.
-                                For your comfort, you will find 3 shared bathrooms, free toiletries and a hair dryer.
-                            </p>
-
-                            <p>You will find a tour desk at the property.</p>
-
-                            <p>Puerta de Toledo is 700 m from Abra Cadabra Suites, while Puerta del Sol is 1 km away.
-                                Adolfo Suarez Madrid-Barajas Airport is 14 km from the property.
-                            </p>
-
-                            <p>This is our guests' favourite part of Madrid, according to independent reviews.</p>
-
-                            <p>Couples particularly like the location — they rated it 8.6 for a two-person trip.</p>
-                        </div>
+                            <p>{description}</p>
+                            </div>
 
                         <div className="bottom-right">
                             <h2 className={"hotel-title"}>Perfect for a 9-night stay</h2>
