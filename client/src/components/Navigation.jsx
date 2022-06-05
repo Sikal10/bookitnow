@@ -9,7 +9,9 @@ const Navigation = () => {
                 </span>
 
                 <div className="navigation__container-items">
-                    <div className="nav-item">Login</div>
+                    <div className="nav-item">
+                        <Link to={"/login"}>Login</Link>
+                    </div>
                     <div className="nav-item">Register</div>
                 </div>
             </div>
