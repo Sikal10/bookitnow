@@ -14,14 +14,14 @@ const Hotels = () => {
     const location = useLocation();
 
     const [destination, setDestination] = useState(location.state.destination);
-    const [date, setDate] = useState(location.state.date);
+    const [dates, setDates] = useState(location.state.dates);
     const [options, setOptions] = useState(location.state.options);
     const [isDateOpen, setIsDateOpen] = useState(false);
     const [minPrice, setMinPrice] = useState(undefined);
     const [maxPrice, setMaxPrice] = useState(undefined);
 
-    const startDate = date[0].startDate;
-    const endDate = date[0].endDate;
+    const startDate = dates[0].startDate;
+    const endDate = dates[0].endDate;
 
     const {isLoading, data, refetch} = useQuery("searchedHotels", () => getSearchedHotels(destination, minPrice, maxPrice));
 
@@ -53,10 +53,10 @@ const Hotels = () => {
                                 </span>
                                 {isDateOpen && <DateRange
                                     editableDateInputs={true}
-                                    onChange={item => setDate([item.selection])}
+                                    onChange={item => setDates([item.selection])}
                                     minDate={new Date()}
                                     moveRangeOnFirstSelection={false}
-                                    ranges={date}
+                                    ranges={dates}
                                     // className={"date-picker"}
                                 />}
                             </div>

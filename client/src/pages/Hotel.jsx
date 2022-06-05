@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Navigation from "../components/Navigation";
 import Header from "../components/Header";
 import {MdClose, MdLocationPin} from "react-icons/md";
@@ -8,6 +8,7 @@ import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 import {useLocation} from "react-router-dom";
 import {getOneHotel} from "../api/hotels.api";
 import {useQuery} from "react-query";
+import {SearchContext} from "../context/SearchContext";
 
 
 const Hotel = () => {
@@ -19,15 +20,33 @@ const Hotel = () => {
         setOpenImage(true)
     };
 
+    /** Time in milliseconds */
+    const timeInMilliseconds = 60 * 60 * 24 * 1000;
+
+    /** get the dates from the context */
+    const {dates, options: {room}} = useContext(SearchContext);
+    const endDate = dates[0].endDate;
+    const startDate = dates[0].startDate;
+
+    /** get the time difference between the two dates */
+    const timeDifference = endDate.getTime() - startDate.getTime();
+
+    /** calculate the days-difference between the two dates */
+    const days = timeDifference / timeInMilliseconds;
+
     /** get the hotel ID from the URL */
     const location = useLocation();
     const hotelID = location.pathname.split('/')[2];
 
-
     const {isLoading, data, isError, error} = useQuery(["hotel", hotelID], () => getOneHotel(hotelID), {
         enabled: Boolean(hotelID)
     });
+
+    if (isLoading) return <h2>Loading...</h2>
+
     const {hotel: {name, distance, description, photos, rating, address, title, cheapestPrice}} = data;
+
+    const totalPrice = days * cheapestPrice * room;
 
     const lastSlide = photos.length - 1;
 
@@ -43,7 +62,6 @@ const Hotel = () => {
         setSlideNumber(newSlideNumber);
     };
 
-    if (isLoading) return <h2>Loading...</h2>
 
     return (
         <div className={"hotel"}>
@@ -56,7 +74,7 @@ const Hotel = () => {
                     <FaArrowLeft onClick={() => handleImageDirection("prev")} className={"slider__left-icon"} />
                     <MdClose onClick={() => setOpenImage(false)} className={"slider__close-icon"} />
                     <div className="slider__wrapper">
-                        <img className={"slider-image"} src={photos[slideNumber].image} alt=""/>
+                        <img className={"slider-image"} src={photos[slideNumber]} alt=""/>
                     </div>
                     <FaArrowRight onClick={() => handleImageDirection("next")} className={"slider__right-icon"}/>
                 </div>}
@@ -87,11 +105,11 @@ const Hotel = () => {
                             </div>
 
                         <div className="bottom-right">
-                            <h2 className={"hotel-title"}>Perfect for a 9-night stay</h2>
+                            <h2 className={"hotel-title"}>Perfect for a {days}-night stay</h2>
 
                             <p>	Situated in the real heart of Madrid, this property has an excellent location score of 8.6</p>
 
-                            <span>$800 <b>(9 nights)</b></span>
+                            <span>${totalPrice} <b>({days} nights)</b></span>
 
                             <button>Reserve.</button>
                         </div>

@@ -5,19 +5,23 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
+import {SearchContextProvider} from "./context/SearchContext";
+
 
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-              <App />
-              <ReactQueryDevtools />
-          </BrowserRouter>
-      </QueryClientProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <QueryClientProvider client={queryClient}>
+            <SearchContextProvider>
+                <BrowserRouter>
+                    <App/>
+                    <ReactQueryDevtools/>
+                </BrowserRouter>
+            </SearchContextProvider>
+        </QueryClientProvider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

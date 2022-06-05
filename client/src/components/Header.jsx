@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {FaBed, FaPlane, FaCarAlt, FaTaxi} from "react-icons/fa";
 import {MdBed, MdCalendarToday, MdPerson} from "react-icons/md";
 import {useState} from "react";
@@ -7,10 +7,11 @@ import {format} from "date-fns";
 import {useNavigate} from "react-router-dom";
 
 import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import 'react-date-range/dist/theme/default.css';
+import {SearchContext} from "../context/SearchContext"; // theme css file
 
 const Header = ({type}) => {
-    const [date, setDate] = useState([{
+    const [dates, setDates] = useState([{
         startDate: new Date(),
         endDate: new Date(),
         key: "selection"
@@ -24,10 +25,12 @@ const Header = ({type}) => {
     const [isDateOpen, setIsDateOpen] = useState(false);
     const [destination, setDestination] = useState("");
 
-    const startDate = date[0].startDate;
-    const endDate = date[0].endDate;
+    const startDate = dates[0].startDate;
+    const endDate = dates[0].endDate;
 
     const navigate = useNavigate();
+
+    const {dispatch} = useContext(SearchContext);
 
     const handleOption = (name, operation) => setOptions(prev => {
         return {
@@ -37,9 +40,8 @@ const Header = ({type}) => {
     });
 
     const handleSearch = () => {
-        navigate("/hotels", {
-            state: {destination, options, date}
-        })
+        dispatch({type: "NEW_SEARCH", payload: {destination, dates, options}});
+        navigate("/hotels", {state: {destination, options, dates}});
     }
 
     return (
@@ -91,13 +93,13 @@ const Header = ({type}) => {
 
                         <div className="searchBarItem">
                             <MdCalendarToday className={"icon"} />
-                            <span onClick={() => setIsDateOpen(!isDateOpen)}>{date ? `${format(startDate, "MM/dd/yyyy")} to ${format(endDate, "MM/dd/yyyy")}` : "Check in - Check out"} </span>
+                            <span onClick={() => setIsDateOpen(!isDateOpen)}>{dates ? `${format(startDate, "MM/dd/yyyy")} to ${format(endDate, "MM/dd/yyyy")}` : "Check in - Check out"} </span>
                             {isDateOpen &&  <DateRange
                                 minDate={new Date()}
                                 editableDateInputs={true}
-                                onChange={item => setDate([item.selection])}
+                                onChange={item => setDates([item.selection])}
                                 moveRangeOnFirstSelection={false}
-                                ranges={date}
+                                ranges={dates}
                                 className={"date-picker"}
                             />}
                         </div>
