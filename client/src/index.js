@@ -6,7 +6,8 @@ import {BrowserRouter} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
 import {SearchContextProvider} from "./context/SearchContext";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ root.render(
         <QueryClientProvider client={queryClient}>
             <SearchContextProvider>
                 <BrowserRouter>
+                    <ToastContainer />
                     <App/>
                     <ReactQueryDevtools/>
                 </BrowserRouter>

@@ -27,14 +27,21 @@
         border-radius: 4px;
       }
 
-      button {
+      .button {
         border: none;
         font-family: cursive;
         background: #0071c2;
-        padding: 15px 20px;
+        padding: 13px 20px;
         width: 100%;
         color: #fff;
         border-radius: 4px;
+        cursor: pointer;
+        font-size: 17px;
+
+        &:disabled {
+          cursor: not-allowed;
+          background: $color-primary;
+        }
       }
     }
 

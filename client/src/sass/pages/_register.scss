@@ -1,5 +1,5 @@
 .register {
-  height: 60vh;
+  height: 80vh;
   display: grid;
   place-items: center;
 
@@ -35,6 +35,12 @@
         width: 100%;
         color: #fff;
         border-radius: 4px;
+        cursor: pointer;
+
+        &:disabled {
+          cursor: not-allowed;
+          background: $color-primary;
+        }
       }
     }
 
